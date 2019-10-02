@@ -1,5 +1,7 @@
 //logs request url, request method, and timestamp to the console
 
-module.export = function logger(req, res, next) {
-    console.log(req);
+module.exports = function logger(req, res, next) {
+    console.log(req.url, req.method, 'Time:', Date.now());
+
+    next();
 }
