@@ -4,9 +4,12 @@
 
 const User = require('../users/userDb');
 
-module.exports = validateUserId, validateUser;
+module.exports = {
+  validateUserId,
+  validateUser
+};
 
-module.exports =  async function validateUserId(req, res, next) {
+async function validateUserId(req, res, next) {
     const user = await User.getById(req.params.id)  
     if (user) {
       req.user = user
@@ -18,10 +21,11 @@ module.exports =  async function validateUserId(req, res, next) {
 
 function validateUser(req, res, next) {
 
+
     console.log(req.body)
-    next()
+    next(400)
   }
 
-// function validatePost(req, res, next) {
+function validatePost(req, res, next) {
 
-// };
+};

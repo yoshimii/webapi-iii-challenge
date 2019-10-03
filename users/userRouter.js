@@ -1,8 +1,10 @@
 const express = require('express');
 
 // import middleware
-const validateUserId = require('../middleware/validate-middleware');
-const validateUser = require('../middleware/validate-middleware');
+const {
+    validateUserId,
+    validateUser
+} = require('../middleware/validate-middleware')
 
 //import userDb module to use user methods
 const User = require('./userDb');
@@ -15,12 +17,6 @@ router.post('/', (req, res) => {
     })
 });
 
-router.post('/:id/posts', validateUserId, (req, res) => {
-    // const id = req.params.id;
-    // User.getById(id).then(res => {
-    //   res.status(201).json(res);
-    // })
-});
 
 router.get('/', (req, res) => {
     User.get().then(users => {
@@ -33,15 +29,22 @@ router.get('/:id', validateUserId, errorHandler, (req, res) => {
 });
 
 router.get('/:id/posts', validateUserId, (req, res) => {
-
+    User.getUserPosts(id).then(posts => {
+        res.status(200).json(posts)
+    })
 });
  
 router.delete('/:id', validateUserId, (req, res) => {
-// 
+    User.remove(id).then(post=> {
+        res.status(204).json(post)
+    })
 });
 
-router.put('/:id', (req, res) => {
-
+router.put('/:id', validateUserId, (req, res) => {
+    const id = req.params.id;
+    User.update(id).then(post => {
+        res.status(200).json(post)
+    })
 });
 
 
