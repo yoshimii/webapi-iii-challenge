@@ -2,21 +2,26 @@
 
 //validate user ID
 
-module.exports = function validateUserID (req, res, next) {
-    const userID = req.params.id;
-    const userBody = req.body;
-    if(!userBody.id) {
-        res.status(400).json({ message: 'invalid user ID'})
+const User = require('../users/userDb');
+
+module.exports = validateUserId, validateUser;
+
+module.exports =  async function validateUserId(req, res, next) {
+    const user = await User.getById(req.params.id)  
+    if (user) {
+      req.user = user
+      next()
     } else {
-        req.user = req.body;
-        next();
+      next(400)
     }
-}
+  }
 
 function validateUser(req, res, next) {
 
-};
+    console.log(req.body)
+    next()
+  }
 
-function validatePost(req, res, next) {
+// function validatePost(req, res, next) {
 
-};
+// };
